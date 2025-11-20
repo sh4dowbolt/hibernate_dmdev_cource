@@ -1,12 +1,12 @@
-package com.suraev;
+package com.suraev.entity;
 
+import com.suraev.converter.BirthDayConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "users_test",schema = "public")
@@ -14,15 +14,15 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class  User {
 
     @Id
     private String username;
     private String firstName;
     private String lastName;
     @Column(name = "birth_date")
-    private LocalDate dateOfBirth;
-    private Integer age;
+    @Convert(converter = BirthDayConverter.class)
+    private Birthday dateOfBirth;
     @Enumerated(EnumType.STRING)
     private Role role;
 

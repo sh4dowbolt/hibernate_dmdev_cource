@@ -1,4 +1,10 @@
 package com.suraev.entity;
 
-public class Birthday {
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+public record Birthday(LocalDate birthday)  {
+    public long getaGE() {
+        return ChronoUnit.YEARS.between(birthday, LocalDate.now());
+    }
 }

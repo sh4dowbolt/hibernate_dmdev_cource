@@ -1,15 +1,14 @@
 package com.suraev;
 
 
+import com.suraev.converter.BirthDayConverter;
+import com.suraev.entity.Birthday;
+import com.suraev.entity.Role;
+import com.suraev.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
-import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
 import org.hibernate.cfg.Configuration;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -22,6 +21,7 @@ public class HibernateRunner {
 */
         Configuration configuration = new Configuration();
         //configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+        configuration.addAttributeConverter(new BirthDayConverter());
         configuration.configure();
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -30,15 +30,14 @@ public class HibernateRunner {
             ses.beginTransaction();
 
             User currentUser = User.builder()
-                    .username("suravvvitaly@gmail.co1m1")
+                    .username("suravvvital1y@gma111i1l.co1m1")
                     .firstName("Vitaly")
                     .lastName("Surayev")
-                    .dateOfBirth(LocalDate.of(1996, 10, 21))
+                    .dateOfBirth(new Birthday(LocalDate.of(1996, 10, 21)))
                     .role(Role.USER)
-                    .age(23)
                     .build();
 
-            ses.persist(currentUser);
+            User user = ses.find(User.class, "suravvvital1y@gmai1l.co1m1");
 
             ses.getTransaction().commit();
         }
